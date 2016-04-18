@@ -1,5 +1,5 @@
 {
-  "name": "react-starter",
+  "name": "enqueue",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
@@ -7,12 +7,14 @@
     "babel-polyfill": "^6.6.1",
     "event-stream": "^3.3.2",
     "express": "^4.13.4",
+    "invariant": "^2.2.1",
     "isomorphic-fetch": "^2.2.1",
     "lodash.camelcase": "^4.1.0",
     "lodash.debounce": "^4.0.3",
     "recluster": "^0.4.5",
     "thenify": "^3.2.0",
-    "url-join": "0.0.1"
+    "url-join": "0.0.1",
+    "warning": "^2.1.0"
   },
   "devDependencies": {
     "babel": "^6.5.2",
@@ -81,17 +83,17 @@
     "webpack-stream": "^3.1.0"
   },
   "scripts": {
-    "test": "./node_modules/.bin/gulp spec",
+    "test": "./node_modules/.bin/gulp",
     "start": "node index.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pivotal-cf/pui-react-starter.git"
+    "url": "https://github.com/msmykowski/enqueue"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pivotal-cf/pui-react-starter/issues"
+    "url": "https://github.com/msmykowski/enqueue/issues"
   },
-  "homepage": "https://github.com/pivotal-cf/pui-react-starter"
+  "homepage": "https://github.com/msmykowski/enqueue"
 }
