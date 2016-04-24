@@ -5,22 +5,21 @@ const types = React.PropTypes;
 const {useStore} = require('p-flux');
 const {useRouter} = require('./use_router');
 const Router = require('./router');
-const io = require('socket.io-client');
+// const io = require('socket.io-client');
 
 class Application extends React.Component {
-  constructor(props) {
-    super(props);
-    const socket = io.connect('http://localhost:3000', {reconnect: true});
-    socket.on('connect', function(socket) {
-      console.log('Connected!');
-    });
-  }
-
   static propTypes = {
     config: types.object.isRequired,
     store: types.object.isRequired,
     router: types.oneOfType([types.object, types.func])
   };
+
+  constructor(props) {
+    super(props);
+    // const socket = io.connect('http://localhost:3000', {reconnect: true});
+    // socket.on('connect', function() {
+    // });
+  }
 
   render() {
     const {config, store, router} = this.props;
