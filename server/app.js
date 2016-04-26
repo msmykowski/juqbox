@@ -4,10 +4,10 @@ const path = require('path');
 const config = require('pui-react-tools/assets/config');
 const {useWebpackDevMiddleware} = config;
 
+const app = express();
+
 const userRouter = require('./user_router');
 const playlistRouter = require('./user_router');
-
-const app = express();
 
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
