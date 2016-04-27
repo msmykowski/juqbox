@@ -19,11 +19,17 @@ module.exports = {
     return db;
   },
 
-  drop: async(name, conn) => {
-    await r.dbDrop(name).run(conn);
+  get: async({name, tableName, id}, conn) => {
+    const dbName = name || process.env.NODE_ENV;
+    return await r.db(dbName).table(tableName).get(id).run(conn);
   },
 
-  closeConnection: async(conn) => {
-    await conn.close();
+  insert: ({name, tableName, data}, conn) => {
+    const dbName = name || process.env.NODE_ENV;
+    r.db(dbName).table(tableName).insert(data).run(conn);
+  },
+
+  drop: async(name, conn) => {
+    await r.dbDrop(name).run(conn);
   }
 };

@@ -14,7 +14,7 @@ beforeAll(async (done) => {
 
 afterAll(async (done) => {
   await db.drop('test', conn);
-  await db.closeConnection(conn);
+  await conn.close();
   process.env.NODE_ENV = 'development';
   done();
 });
