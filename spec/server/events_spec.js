@@ -13,7 +13,7 @@ describe('on connection', () => {
     const conn = await db.establishConnection();
     db.insert({tableName: 'playlists', data}, conn);
 
-    socket = await io.connect('http://localhost:3000');
+    socket = await io.connect(`http://localhost:${process.env.PORT}`);
     socket.on('connect', function() {
       socket.emit('playlistId', 1);
     });

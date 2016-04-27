@@ -1,6 +1,8 @@
+const env = require('gulp-env');
 const gulp = require('gulp');
 const plugins = require('gulp-load-plugins')();
 const {spawn} = require('child_process');
+const runSequence = require('run-sequence');
 const waitUntilListening = require('strong-wait-till-listening');
 
 let node;
@@ -33,5 +35,9 @@ gulp.task('watch-server', function() {
 });
 
 gulp.task('s', ['server', 'watch-server', 'assets-config']);
+
+gulp.task('set-test-env', () => {env.set({ NODE_ENV: 'test', PORT: '3003'});});
+
+gulp.task('spec-s', cb => runSequence('set-test-env', 'server', 'spec-server', cb));
 
 module.exports = {restartServer, killServer};

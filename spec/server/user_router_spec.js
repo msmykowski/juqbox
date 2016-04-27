@@ -2,7 +2,7 @@ require('./spec_helper');
 
 describe('UserRouter', () => {
   const fetch = require('isomorphic-fetch');
-  const base_url = 'http://localhost:3000';
+  const base_url = `http://localhost:${process.env.PORT}`;
 
   describe('GET /user/:id', () => {
     it('returns status code 200', async(done) => {
