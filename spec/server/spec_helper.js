@@ -7,6 +7,8 @@ let conn;
 
 beforeAll(async (done) => {
   conn = await db.establishConnection();
+  const dbs = await db.listDbs(conn);
+  if (dbs.includes('test')) await db.drop('test', conn);
   await db.init({tables}, conn);
   done();
 });

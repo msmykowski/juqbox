@@ -29,6 +29,10 @@ module.exports = {
     r.db(dbName).table(tableName).insert(data).run(conn);
   },
 
+  listDbs: async(conn) => {
+    return await r.dbList().run(conn);
+  },
+
   drop: async(name, conn) => {
     await r.dbDrop(name).run(conn);
   }
