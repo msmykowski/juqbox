@@ -1,6 +1,6 @@
 require('babel-core/register');
 require('babel-polyfill');
-const db = require('./db');
+const eventHandlers = require('./event_handlers');
 
 /* eslint-disable no-var */
 var app = require('./app');
@@ -13,17 +13,6 @@ server.listen(process.env.PORT || 3000, function() {
   process.send && process.send({cmd: 'ready'});
 });
 
-io.on('connection', (socket) => {
-  socket.on('playlistId', (id) => {
-    db.establishConnection()
-    .then((conn) => {
-      db.get({tableName: 'playlists', id}, conn)
-      .then((data) => {
-        socket.emit('getPlaylist', data);
-        conn.close();
-      });
-    });
-  });
-});
+io.on('connection', eventHandlers.onConnectionHandler);
 
 module.exports = app;
