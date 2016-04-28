@@ -1,6 +1,6 @@
 require('babel-core/register');
 require('babel-polyfill');
-const eventHandlers = require('./event_handlers');
+const events = require('./events');
 
 /* eslint-disable no-var */
 var app = require('./app');
@@ -13,6 +13,6 @@ server.listen(process.env.PORT || 3000, function() {
   process.send && process.send({cmd: 'ready'});
 });
 
-io.on('connection', eventHandlers.onConnectionHandler);
+events.connection(io);
 
 module.exports = app;
