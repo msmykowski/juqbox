@@ -19,7 +19,7 @@ const handlePlaylistUpdate = generateEventListener('data', (message, io) => {
 
 const connection = playlistId;
 
-const onDbChanges = (io) => {
+const dbChanges = (io) => {
   db.establishConnection()
   .then((conn) => {
     db.changes({tableName: 'playlists'}, function(err, feed) {
@@ -30,6 +30,6 @@ const onDbChanges = (io) => {
 };
 
 const events = {connection};
-const listeners = generateEventListeners(events);
+const listeners = {...generateEventListeners(events), dbChanges};
 
-module.exports = {listeners, onDbChanges};
+module.exports = listeners;

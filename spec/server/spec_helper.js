@@ -1,4 +1,3 @@
-require('../support/bluebird');
 require('../spec_helper');
 const {tables} = require('../../server/db.json');
 const db = require('../../server/db');
@@ -14,7 +13,7 @@ beforeAll(async (done) => {
 });
 
 afterAll(async (done) => {
-  await db.drop('test', conn);
+  //TODO: teardown test db
   await conn.close();
   done();
 });

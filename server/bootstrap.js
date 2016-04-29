@@ -12,7 +12,7 @@ server.listen(process.env.PORT || 3000, function() {
   process.send && process.send({cmd: 'ready'});
 });
 
-events.listeners.connection(io, io);
-events.onDbChanges(io);
+events.connection(io, io);
+events.dbChanges(io);
 
 module.exports = app;

@@ -39,15 +39,17 @@ describe('events', () => {
   });
 
   describe('on change', () => {
+    beforeEach(() => {
+      clientSocket.on('updatePlaylist1', function(data) {
+        event = data;
+      });
+    });
+
     describe('when a song is added to a playlist', () => {
       beforeEach(async(done) => {
-        clientSocket.on('updatePlaylist1', function(data) {
-          event = data;
-          done();
-        });
-
         playlist = {id: 1, entries: ['smoothJams', 'marvinGaye', 'newSong']};
         await db.update({tableName: 'playlists', id: 1, data: playlist}, conn);
+        done();
       });
 
       it('returns the updated playlist', () => {
@@ -57,13 +59,9 @@ describe('events', () => {
 
     describe('when a song is removed from a playlist', () => {
       beforeEach(async(done) => {
-        clientSocket.on('updatePlaylist1', function(data) {
-          event = data;
-          done();
-        });
-
         playlist = {id: 1, entries: ['smoothJams']};
         await db.update({tableName: 'playlists', id: 1, data: playlist}, conn);
+        done();
       });
 
       it('returns the updated playlist', () => {
