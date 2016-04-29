@@ -1,5 +1,5 @@
 const db = require('./db');
-const {generateEventListener, generateEventListeners} = require('./socket_api');
+const {generateEventListener, generateEventListeners, dbChangeListener} = require('./event_api');
 
 const playlistId = generateEventListener('playlistId', (id, listener) => {
   db.establishConnection()
@@ -12,24 +12,9 @@ const playlistId = generateEventListener('playlistId', (id, listener) => {
   });
 });
 
-const handlePlaylistUpdate = generateEventListener('data', (message, io) => {
-  const {new_val: newVal} = message;
-  io.emit(`updatePlaylist${newVal.id}`, newVal);
-});
-
+const playlistUpdate = (io) => dbChangeListener(io, 'playlists');
 const connection = playlistId;
 
-const dbChanges = (io) => {
-  db.establishConnection()
-  .then((conn) => {
-    db.changes({tableName: 'playlists'}, function(err, feed) {
-      if (err) conn.close();
-      handlePlaylistUpdate(feed, io);
-    }, conn);
-  });
-};
+const events = {...generateEventListeners({connection}), playlistUpdate};
 
-const events = {connection};
-const listeners = {...generateEventListeners(events), dbChanges};
-
-module.exports = listeners;
+module.exports = events;

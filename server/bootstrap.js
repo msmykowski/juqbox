@@ -13,6 +13,6 @@ server.listen(process.env.PORT || 3000, function() {
 });
 
 events.connection(io, io);
-events.dbChanges(io);
+events.playlistUpdate(io);
 
 module.exports = app;
