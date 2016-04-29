@@ -1,10 +1,10 @@
-function bindListener(eventHandler, listener) {
-  return (msg) => eventHandler(msg, listener);
+function bindOptions(eventHandler, ...options) {
+  return (msg) => eventHandler(msg, ...options);
 }
 
 function generateEventListener(eventName, eventHandler) {
-  return (listener) => {
-    return listener.on(eventName, bindListener(eventHandler, listener));
+  return (listener, ...options) => {
+    return listener && listener.on(eventName, bindOptions(eventHandler, ...options));
   };
 }
 

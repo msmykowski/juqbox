@@ -19,14 +19,24 @@ module.exports = {
     return db;
   },
 
+  changes: async({name, tableName}, cb, conn) => {
+    const dbName = name || process.env.NODE_ENV;
+    return await r.db(dbName).table(tableName).changes().run(conn, cb);
+  },
+
   get: async({name, tableName, id}, conn) => {
     const dbName = name || process.env.NODE_ENV;
     return await r.db(dbName).table(tableName).get(id).run(conn);
   },
 
-  insert: ({name, tableName, data}, conn) => {
+  insert: async({name, tableName, data}, conn) => {
     const dbName = name || process.env.NODE_ENV;
-    r.db(dbName).table(tableName).insert(data).run(conn);
+    return await r.db(dbName).table(tableName).insert(data).run(conn);
+  },
+
+  update: async({name, tableName, id, data}, conn) => {
+    const dbName = name || process.env.NODE_ENV;
+    return await r.db(dbName).table(tableName).get(id).update(data).run(conn);
   },
 
   listDbs: async(conn) => {
