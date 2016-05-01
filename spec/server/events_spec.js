@@ -15,9 +15,8 @@ describe('events', () => {
     clientSocket = await io.connect(`http://localhost:${process.env.PORT}`);
     clientSocket.on('connect', function() {
       clientSocket.emit('playlistId', 1);
+      done();
     });
-
-    done();
   });
 
   afterAll(() => {
@@ -67,6 +66,22 @@ describe('events', () => {
       it('returns the updated playlist', () => {
         expect(event).toEqual(playlist);
       });
+    });
+  });
+
+  describe('playlistUpdate', () => {
+    beforeEach(async(done) => {
+      playlist = {id: 1, entries: ['smoothJams', 'boom, boom']};
+      clientSocket.emit('playlistUpdate', playlist);
+      done();
+    });
+
+    it('updates the playlist', async(done) => {
+      setTimeout(async() => {
+        const dbPlaylist = await db.get({tableName: 'playlists', id: 1}, conn);
+        expect(dbPlaylist).toEqual(playlist);
+        done();
+      }, 1000);
     });
   });
 });

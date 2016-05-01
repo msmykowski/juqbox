@@ -1,20 +1,35 @@
 const db = require('./db');
 const {generateEventListener, generateEventListeners, dbChangeListener} = require('./event_api');
 
-const playlistId = generateEventListener('playlistId', (id, listener) => {
-  db.establishConnection()
-  .then((conn) => {
-    db.get({tableName: 'playlists', id}, conn)
-    .then((data) => {
-      listener.emit(`playlists${id}`, data);
-      conn.close();
-    });
+const playlistIdEventListener = generateEventListener('playlistId', (id, listener) => {
+  let conn;
+
+  return db.establishConnection()
+  .then((connection) => {
+    conn = connection;
+    return db.get({tableName: 'playlists', id}, conn);
+  })
+  .then((data) => {
+    listener.emit(`playlists${id}`, data);
+    conn.close();
   });
 });
 
-const playlistUpdate = (io) => dbChangeListener(io, 'playlists');
-const connection = playlistId;
+const playlistUpdateEventListener = generateEventListener('playlistUpdate', (data) => {
+  const {id} = data;
+  return db.establishConnection()
+  .then((conn) => {
+    return db.update({tableName: 'playlists', id, data}, conn);
+  });
+});
 
-const events = {...generateEventListeners({connection}), playlistUpdate};
+const dbPlaylistUpdate = (io) => dbChangeListener(io, 'playlists');
+
+const connection = (listener) => {
+  playlistIdEventListener(listener, listener);
+  playlistUpdateEventListener(listener);
+};
+
+const events = {...generateEventListeners({connection}), dbPlaylistUpdate};
 
 module.exports = events;
