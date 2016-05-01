@@ -17,17 +17,17 @@ function generateEventListeners(events) {
   }, {});
 }
 
-const tableUpdateHandler = generateEventListener('data', (message, io, tableName) => {
+const tableUpdateHandler = generateEventListener('data', (message, listener, tableName) => {
   const {new_val: newVal} = message;
-  io.emit(`${tableName}Update${newVal.id}`, newVal);
+  listener.emit(`${tableName}${newVal.id}`, newVal);
 });
 
-function dbChangeListener(io, tableName) {
+function dbChangeListener(listener, tableName) {
   db.establishConnection()
   .then((conn) => {
     db.changes({tableName}, function(err, feed) {
       if (err) conn.close();
-      tableUpdateHandler(feed, io, tableName);
+      tableUpdateHandler(feed, listener, tableName);
     }, conn);
   });
 };

@@ -6,7 +6,7 @@ const playlistId = generateEventListener('playlistId', (id, listener) => {
   .then((conn) => {
     db.get({tableName: 'playlists', id}, conn)
     .then((data) => {
-      listener.emit('getPlaylist', data);
+      listener.emit(`playlists${id}`, data);
       conn.close();
     });
   });

@@ -27,7 +27,7 @@ describe('events', () => {
 
   describe('on connection', () => {
     beforeEach(async(done) => {
-      clientSocket.on('getPlaylist', function(data) {
+      clientSocket.on('playlists1', function(data) {
         event = data;
         done();
       });
@@ -41,7 +41,7 @@ describe('events', () => {
   describe('on change', () => {
     describe('when a song is added to a playlist', () => {
       beforeEach(async(done) => {
-        clientSocket.on('playlistsUpdate1', function(data) {
+        clientSocket.on('playlists1', function(data) {
           event = data;
           done();
         });
@@ -56,7 +56,7 @@ describe('events', () => {
 
     describe('when a song is removed from a playlist', () => {
       beforeEach(async(done) => {
-        clientSocket.on('playlistsUpdate1', function(data) {
+        clientSocket.on('playlists1', function(data) {
           event = data;
           done();
         });
