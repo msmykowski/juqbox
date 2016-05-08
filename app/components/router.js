@@ -1,8 +1,7 @@
 const React = require('react');
+const {Actions} = require('p-flux');
+
 const types = require('react').PropTypes;
-const UserCreatePage = require('./user_create_page');
-const UserListPage = require('./user_list_page');
-const TodoPage = require('./todo_page');
 
 function isObject(obj) {
   return typeof obj === 'object';
@@ -21,12 +20,7 @@ function toFlattenedRoutes(routesHash) {
 }
 
 const routes = {
-  '/': 'todoList',
-  '/todoList': 'todoList',
-  '/users': {
-    '/list': 'showUsers',
-    '/new': 'createUser'
-  }
+  '/': 'root',
 };
 
 class Router extends React.Component {
@@ -34,10 +28,9 @@ class Router extends React.Component {
     router: types.oneOfType([types.object, types.func])
   };
 
-  constructor(props, context) {
-    super(props, context);
-    const {state} = this;
-    this.state = {...state, Page: TodoPage };
+  constructor() {
+    super();
+    Actions.socketConnect();
   }
 
   componentDidMount() {
@@ -46,24 +39,11 @@ class Router extends React.Component {
       router.get(path, this[callbackName]);
     });
   }
-  todoList = () => {
-    this.setState({Page: TodoPage});
+  root = () => {
   };
-
-  showUsers = () => {
-    this.setState({Page: UserListPage});
-  };
-
-  createUser = () => {
-    this.setState({Page: UserCreatePage});
-  };
-
 
   render() {
-    const {Page} = this.state;
-    return (
-      <Page {...this.props}/>
-    );
+    return null;
   }
 }
 

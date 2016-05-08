@@ -3,7 +3,6 @@ const {generateEventListener, generateEventListeners, dbChangeListener} = requir
 
 const playlistIdEventListener = generateEventListener('playlistId', (id, listener) => {
   let conn;
-
   return db.establishConnection()
   .then((connection) => {
     conn = connection;

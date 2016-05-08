@@ -36,13 +36,13 @@ gulp.task('watch-server', function() {
 
 gulp.task('db-server', function() {rethinkdb = spawn('rethinkdb');});
 
-gulp.task('s', ['db-server', 'server', 'watch-server', 'assets-config']);
-
 gulp.task('set-test-env', () => {env.set({ NODE_ENV: 'test', PORT: '3003'});});
 
 gulp.task('spec-s', ['set-test-env', 's', 'spec-server']);
 
 gulp.task('kill-servers', () => killServer());
+
+gulp.task('s', ['server', 'watch-server', 'assets-config']);
 
 gulp.task('exit', () => process.exit(0));
 
