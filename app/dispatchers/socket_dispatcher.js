@@ -3,11 +3,11 @@ const {Actions} = require('p-flux');
 
 let socket;
 const SocketDispatcher = {
-  socketConnect() {
+  socketConnect({data: id}) {
     socket = io.connect('http://localhost:3000', {reconnect: true});
     socket.on('connect', function() {
-      socket.emit('playlistId', 1);
-      socket.on('playlists1', function(data) {
+      socket.emit('playlistId', Number(id));
+      socket.on(`playlists${id}`, function(data) {
         Actions.entriesUpdate(data);
       });
     });

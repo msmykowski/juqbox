@@ -20,7 +20,7 @@ function toFlattenedRoutes(routesHash) {
 }
 
 const routes = {
-  '/': 'root',
+  '/playlist/:id': 'playlistPage',
 };
 
 class Router extends React.Component {
@@ -29,15 +29,14 @@ class Router extends React.Component {
   };
 
   componentDidMount() {
-    Actions.socketConnect();
-    
     const {router} = this.props;
     Object.entries(toFlattenedRoutes(routes)).map(([path, callbackName]) => {
       router.get(path, this[callbackName]);
     });
   }
 
-  root = () => {
+  playlistPage = ({params: {id}}) => {
+    Actions.socketConnect(id);
   };
 
   render() {

@@ -1,6 +1,6 @@
 {
-  "globalNamespace": "MyReactStarter",
-  "title": "My React Starter",
+  "globalNamespace": "Enqueue",
+  "title": "Enqueue",
   "scripts": [
     "application.js"
   ],

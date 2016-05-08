@@ -16,7 +16,7 @@ class Application extends React.Component {
   render() {
     const {config, store, router} = this.props;
     return (
-      <div className="pui-react-starter">
+      <div className="enqueue">
         <Router {...{router, config, ...store}}/>
       </div>
     );

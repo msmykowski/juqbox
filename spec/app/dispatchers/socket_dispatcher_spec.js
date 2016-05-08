@@ -23,7 +23,7 @@ describe('SocketDispatcher', () => {
   describe('socket', () => {
     describe('connect', () => {
       beforeEach(() => {
-        subject.dispatch({type: 'socketConnect'});
+        subject.dispatch({type: 'socketConnect', data: '1'});
       });
 
       it('opens up a connection to the server', () => {
