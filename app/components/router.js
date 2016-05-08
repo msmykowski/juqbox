@@ -28,17 +28,15 @@ class Router extends React.Component {
     router: types.oneOfType([types.object, types.func])
   };
 
-  constructor() {
-    super();
-    Actions.socketConnect();
-  }
-
   componentDidMount() {
+    Actions.socketConnect();
+    
     const {router} = this.props;
     Object.entries(toFlattenedRoutes(routes)).map(([path, callbackName]) => {
       router.get(path, this[callbackName]);
     });
   }
+
   root = () => {
   };
 
