@@ -20,8 +20,9 @@ let globals;
 beforeAll(() => {
   globals = {
     Dispatcher,
+    MockRouter,
     jQuery,
-    MyReactStarter: {},
+    Enqueue: {},
     React,
     ReactDOM,
     $: jQuery,

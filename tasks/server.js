@@ -38,7 +38,7 @@ gulp.task('db-server', function() {rethinkdb = spawn('rethinkdb');});
 
 gulp.task('set-test-env', () => {env.set({ NODE_ENV: 'test', PORT: '3003'});});
 
-gulp.task('spec-s', ['set-test-env', 's', 'spec-server']);
+gulp.task('spec-s', ['db-server', 'set-test-env', 's', 'spec-server']);
 
 gulp.task('kill-servers', () => killServer());
 
