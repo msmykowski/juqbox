@@ -50,4 +50,19 @@ describe('SocketDispatcher', () => {
       });
     });
   });
+
+  describe('playlist', () => {
+    describe('update', () => {
+      let playlist;
+      beforeEach(() => {
+        playlist = {id: 1, entries: ['song1', 'song2', 'song3']};
+        subject.dispatch({type: 'socketConnect', data: '1'});
+        subject.dispatch({type: 'playlistUpdate', data: playlist});
+      });
+
+      it('sends a playlistUpdate event to the server', () => {
+        expect(emitSpy).toHaveBeenCalledWith('playlistUpdate', playlist);
+      });
+    });
+  });
 });

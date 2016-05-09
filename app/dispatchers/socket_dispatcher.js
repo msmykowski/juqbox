@@ -12,6 +12,9 @@ const SocketDispatcher = {
       });
     });
   },
+  playlistUpdate({data}) {
+    socket.emit('playlistUpdate', data);
+  },
   entriesUpdate({data: {entries}}) {
     this.$store.refine('entries').set(entries);
   }
