@@ -11,12 +11,19 @@ describe('Router', () => {
   });
 
   describe('/playlist/:id', () => {
+    let PlaylistPage;
     beforeEach(() => {
+      PlaylistPage = require('../../../app/components/playlist_page');
+      spyOnRender(PlaylistPage);
       MockRouter.navigate(`/playlist/1`);
     });
 
     it('opens a socket to the server', () => {
       expect(Dispatcher.dispatch).toHaveBeenCalledWith({type: 'socketConnect', data: '1'});
+    });
+
+    it('renders the playlistPage', () => {
+      expect(PlaylistPage.prototype.render).toHaveBeenCalled();
     });
   });
 });

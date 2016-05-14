@@ -1,5 +1,6 @@
 const React = require('react');
 const {Actions} = require('p-flux');
+const PlaylistPage = require('./playlist_page');
 
 const types = require('react').PropTypes;
 
@@ -28,6 +29,12 @@ class Router extends React.Component {
     router: types.oneOfType([types.object, types.func])
   };
 
+  constructor(props, context) {
+    super(props, context);
+    const {state} = this;
+    this.state = {...state, Page: PlaylistPage };
+  }
+
   componentDidMount() {
     const {router} = this.props;
     Object.entries(toFlattenedRoutes(routes)).map(([path, callbackName]) => {
@@ -37,10 +44,14 @@ class Router extends React.Component {
 
   playlistPage = ({params: {id}}) => {
     Actions.socketConnect(id);
+    this.setState({Page: PlaylistPage});
   };
 
   render() {
-    return null;
+    const {Page} = this.state;
+    return (
+      <Page {...this.props}/>
+    );
   }
 }
 
