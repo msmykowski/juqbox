@@ -12,7 +12,9 @@
   },
 
   "globals": {
-    "MyReactStarter": true,
+    "Enqueue": true,
+    "MockRouter": true,
+    "spyOnRender": true,
     "root": true,
     "Bluebird": true,
     "Dispatcher": true,

@@ -12,7 +12,7 @@ server.listen(process.env.PORT || 3000, function() {
   process.send && process.send({cmd: 'ready'});
 });
 
-events.connection(io, io);
-events.playlistUpdate(io);
+events.connection(io);
+events.dbPlaylistUpdate(io);
 
 module.exports = app;
