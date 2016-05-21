@@ -36,17 +36,17 @@ describe('SocketDispatcher', () => {
     });
   });
 
-  describe('entries', () => {
+  describe('playlist', () => {
     describe('update', () => {
+      let playlist;
       beforeEach(() => {
-        subject.$store = new Cursor({entries: []}, cursorSpy);
-        subject.dispatch({type: 'entriesUpdate', data: {id: 1, entries: ['song1', 'song2']}});
+        playlist = {id: 1, entries: ['song1', 'song2']};
+        subject.$store = new Cursor({playlist: {}}, cursorSpy);
+        subject.dispatch({type: 'entriesUpdate', data: playlist});
       });
 
-      it('updates the song entries', () => {
-        expect(cursorSpy).toHaveBeenCalledWith({
-          entries: ['song1', 'song2']
-        });
+      it('updates the playlist', () => {
+        expect(cursorSpy).toHaveBeenCalledWith({playlist});
       });
     });
   });

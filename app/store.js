@@ -1,5 +1,5 @@
 module.exports = {
-  entries: [],
+  playlist: {},
   todoItems: [],
   users: []
 };
