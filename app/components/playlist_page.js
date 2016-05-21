@@ -9,13 +9,13 @@ class PlaylistPage extends React.Component {
 
   onClick = () => {
     const addedEntry = this._input.value;
-    const {playlist={}} = this.props;
+    const {playlist} = this.props;
     const {entries} = playlist;
     Actions.playlistUpdate({...playlist, entries: [...entries, addedEntry]});
   }
 
   render() {
-    const {playlist: {entries}={}} = this.props;
+    const {playlist: {entries}} = this.props;
     const entriesList = entries && entries.map((entry, i) => <div className="entry" key={i}>{entry}</div>);
     return (
       <div>
