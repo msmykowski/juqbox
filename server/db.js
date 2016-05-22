@@ -1,17 +1,13 @@
-const r = require('rethinkdb');
+const r = require('rethinkdbdash')();
 
 module.exports = {
-  establishConnection: async() => {
-    return await r.connect({host: 'localhost', port: 28015});
-  },
-
-  init: async({name, tables}, conn) => {
+  init: async({name, tables}) => {
     let db;
     const dbName = name || process.env.NODE_ENV;
     try {
-      db = await r.dbCreate(dbName).run(conn);
+      db = await r.dbCreate(dbName).run();
       for (let table of tables) {
-        await r.db(dbName).tableCreate(table).run(conn);
+        await r.db(dbName).tableCreate(table).run();
       }
     } catch (err) {
       throw(err);
@@ -19,38 +15,38 @@ module.exports = {
     return db;
   },
 
-  changes: async({name, tableName}, cb, conn) => {
+  changes: async({name, tableName}, cb) => {
     const dbName = name || process.env.NODE_ENV;
-    return await r.db(dbName).table(tableName).changes().run(conn, cb);
+    return await r.db(dbName).table(tableName).changes().run(cb);
   },
 
-  get: async({name, tableName, id}, conn) => {
+  get: async({name, tableName, id}) => {
     const dbName = name || process.env.NODE_ENV;
-    return await r.db(dbName).table(tableName).get(id).run(conn);
+    return await r.db(dbName).table(tableName).get(id).run();
   },
 
-  insert: async({name, tableName, data}, conn) => {
+  insert: async({name, tableName, data}) => {
     const dbName = name || process.env.NODE_ENV;
-    return await r.db(dbName).table(tableName).insert(data).run(conn);
+    return await r.db(dbName).table(tableName).insert(data).run();
   },
 
-  update: async({name, tableName, id, data}, conn) => {
+  update: async({name, tableName, id, data}) => {
     const dbName = name || process.env.NODE_ENV;
-    return await r.db(dbName).table(tableName).get(id).update(data).run(conn);
+    return await r.db(dbName).table(tableName).get(id).update(data).run();
   },
 
-  append: async({name, tableName, property, id, data}, conn) => {
+  listDbs: async() => {
+    return await r.dbList().run();
+  },
+
+  append: async({name, tableName, property, id, data}) => {
     const dbName = name || process.env.NODE_ENV;
     return await r.db(dbName).table(tableName).get(id).update({
       [property]: r.row(property).append(data)
-    }).run(conn);
+    }).run();
   },
 
-  listDbs: async(conn) => {
-    return await r.dbList().run(conn);
-  },
-
-  drop: async(name, conn) => {
-    await r.dbDrop(name).run(conn);
+  drop: async(name) => {
+    await r.dbDrop(name).run();
   }
 };

@@ -1,16 +1,14 @@
 require('./spec_helper');
 const io = require('socket.io-client');
+const db = require('../../server/db');
 
-let event, conn, playlist, clientSocket, db;
+let event, playlist, clientSocket;
 describe('events', () => {
   beforeAll(async(done) => {
-    db = require('../../server/db');
-    conn = await db.establishConnection();
-
     playlist = {id: 1, entries: ['smoothJams', 'marvinGaye']};
     const data = [playlist, {id: 2, entries: ['heavyMetal', 'blink182']}];
 
-    await db.insert({tableName: 'playlists', data}, conn);
+    await db.insert({tableName: 'playlists', data});
 
     clientSocket = await io.connect(`http://localhost:${process.env.PORT}`);
     clientSocket.on('connect', function() {
@@ -21,12 +19,11 @@ describe('events', () => {
 
   afterEach(async(done) => {
     playlist = {id: 1, entries: ['smoothJams', 'marvinGaye']};
-    await db.update({tableName: 'playlists', id: 1, data: playlist}, conn);
+    await db.update({tableName: 'playlists', id: 1, data: playlist});
     done();
   });
 
   afterAll(() => {
-    conn.close();
     clientSocket.disconnect();
   });
 
@@ -51,7 +48,7 @@ describe('events', () => {
           done();
         });
         playlist = {id: 1, entries: ['smoothJams', 'marvinGaye', 'newSong']};
-        await db.update({tableName: 'playlists', id: 1, data: playlist}, conn);
+        await db.update({tableName: 'playlists', id: 1, data: playlist});
       });
 
       it('returns the updated playlist', () => {
@@ -66,7 +63,7 @@ describe('events', () => {
           done();
         });
         playlist = {id: 1, entries: ['smoothJams']};
-        await db.update({tableName: 'playlists', id: 1, data: playlist}, conn);
+        await db.update({tableName: 'playlists', id: 1, data: playlist});
       });
 
       it('returns the updated playlist', () => {
@@ -85,8 +82,8 @@ describe('events', () => {
 
     it('updates the playlist', async(done) => {
       setTimeout(async() => {
+        const dbPlaylist = await db.get({tableName: 'playlists', id: 1});
         playlist = {id: 1, entries: ['smoothJams', 'marvinGaye', newSong]};
-        const dbPlaylist = await db.get({tableName: 'playlists', id: 1}, conn);
         expect(dbPlaylist).toEqual(playlist);
         done();
       }, 1000);
