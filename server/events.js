@@ -15,10 +15,10 @@ const playlistIdEventListener = generateEventListener('playlistId', (id, listene
 });
 
 const playlistUpdateEventListener = generateEventListener('playlistUpdate', (data) => {
-  const {id} = data;
+  const {id, entry} = data;
   return db.establishConnection()
   .then((conn) => {
-    return db.update({tableName: 'playlists', id, data}, conn);
+    return db.append({tableName: 'playlists', id, property: 'entries', data: entry}, conn);
   });
 });
 

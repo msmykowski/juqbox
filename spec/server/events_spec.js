@@ -19,6 +19,12 @@ describe('events', () => {
     });
   });
 
+  afterEach(async(done) => {
+    playlist = {id: 1, entries: ['smoothJams', 'marvinGaye']};
+    await db.update({tableName: 'playlists', id: 1, data: playlist}, conn);
+    done();
+  });
+
   afterAll(() => {
     conn.close();
     clientSocket.disconnect();
@@ -70,14 +76,16 @@ describe('events', () => {
   });
 
   describe('playlistUpdate', () => {
+    let newSong;
     beforeEach(async(done) => {
-      playlist = {id: 1, entries: ['smoothJams', 'boom, boom']};
-      clientSocket.emit('playlistUpdate', playlist);
+      newSong = 'newSong';
+      clientSocket.emit('playlistUpdate', {id: 1, entry: newSong});
       done();
     });
 
     it('updates the playlist', async(done) => {
       setTimeout(async() => {
+        playlist = {id: 1, entries: ['smoothJams', 'marvinGaye', newSong]};
         const dbPlaylist = await db.get({tableName: 'playlists', id: 1}, conn);
         expect(dbPlaylist).toEqual(playlist);
         done();

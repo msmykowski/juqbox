@@ -39,6 +39,13 @@ module.exports = {
     return await r.db(dbName).table(tableName).get(id).update(data).run(conn);
   },
 
+  append: async({name, tableName, property, id, data}, conn) => {
+    const dbName = name || process.env.NODE_ENV;
+    return await r.db(dbName).table(tableName).get(id).update({
+      [property]: r.row(property).append(data)
+    }).run(conn);
+  },
+
   listDbs: async(conn) => {
     return await r.dbList().run(conn);
   },

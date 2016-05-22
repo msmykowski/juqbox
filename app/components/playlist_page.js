@@ -8,9 +8,9 @@ class PlaylistPage extends React.Component {
   };
 
   onClick = () => {
-    const addedEntry = this._input.value;
     const {playlist} = this.props;
     const {entries} = playlist;
+    const addedEntry = this._input.value;
     Actions.playlistUpdate({...playlist, entries: [...entries, addedEntry]});
   }
 

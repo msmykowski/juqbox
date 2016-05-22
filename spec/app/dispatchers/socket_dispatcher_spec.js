@@ -36,7 +36,7 @@ describe('SocketDispatcher', () => {
     });
   });
 
-  describe('playlist', () => {
+  describe('entries', () => {
     describe('update', () => {
       let playlist;
       beforeEach(() => {
