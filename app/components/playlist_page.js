@@ -11,7 +11,7 @@ class PlaylistPage extends React.Component {
     const {playlist} = this.props;
     const {id} = playlist;
     const addedEntry = this._input.value;
-    Actions.playlistUpdate({id, entry: addedEntry});
+    Actions.socketEmitPlaylistUpdate({id, entry: addedEntry});
   }
 
   render() {

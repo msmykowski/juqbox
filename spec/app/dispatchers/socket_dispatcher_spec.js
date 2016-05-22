@@ -34,6 +34,19 @@ describe('SocketDispatcher', () => {
         expect(onSpy).toHaveBeenCalledWith('connect', jasmine.any(Function));
       });
     });
+
+    describe('emitPlaylistUpdate', () => {
+      let playlist;
+      beforeEach(() => {
+        playlist = {id: 1, entry: 'song1'};
+        subject.dispatch({type: 'socketConnect', data: '1'});
+        subject.dispatch({type: 'socketEmitPlaylistUpdate', data: playlist});
+      });
+
+      it('sends a playlistUpdate event to the server', () => {
+        expect(emitSpy).toHaveBeenCalledWith('playlistUpdate', playlist);
+      });
+    });
   });
 
   describe('entries', () => {
@@ -47,21 +60,6 @@ describe('SocketDispatcher', () => {
 
       it('updates the playlist', () => {
         expect(cursorSpy).toHaveBeenCalledWith({playlist});
-      });
-    });
-  });
-
-  describe('playlist', () => {
-    describe('update', () => {
-      let playlist;
-      beforeEach(() => {
-        playlist = {id: 1, entries: ['song1', 'song2', 'song3']};
-        subject.dispatch({type: 'socketConnect', data: '1'});
-        subject.dispatch({type: 'playlistUpdate', data: playlist});
-      });
-
-      it('sends a playlistUpdate event to the server', () => {
-        expect(emitSpy).toHaveBeenCalledWith('playlistUpdate', playlist);
       });
     });
   });

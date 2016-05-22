@@ -25,7 +25,7 @@ describe('PlaylistPage', () => {
     });
 
     it('dispatches a playlist update event', () => {
-      expect(Dispatcher.dispatch).toHaveBeenCalledWith({type: 'playlistUpdate', data: {id: 1, entry: newSong}});
+      expect(Dispatcher.dispatch).toHaveBeenCalledWith({type: 'socketEmitPlaylistUpdate', data: {id: 1, entry: newSong}});
     });
   });
 });

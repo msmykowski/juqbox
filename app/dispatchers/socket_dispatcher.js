@@ -12,7 +12,7 @@ const SocketDispatcher = {
       });
     });
   },
-  playlistUpdate({data}) {
+  socketEmitPlaylistUpdate({data}) {
     socket.emit('playlistUpdate', data);
   },
   entriesUpdate({data}) {
