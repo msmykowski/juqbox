@@ -2,24 +2,15 @@ const db = require('./db');
 const {generateEventListener, generateEventListeners, dbChangeListener} = require('./event_api');
 
 const playlistIdEventListener = generateEventListener('playlistId', (id, listener) => {
-  let conn;
-  return db.establishConnection()
-  .then((connection) => {
-    conn = connection;
-    return db.get({tableName: 'playlists', id}, conn);
-  })
+  return db.get({tableName: 'playlists', id})
   .then((data) => {
     listener.emit(`playlists${id}`, data);
-    conn.close();
   });
 });
 
 const playlistUpdateEventListener = generateEventListener('playlistUpdate', (data) => {
   const {id} = data;
-  return db.establishConnection()
-  .then((conn) => {
-    return db.update({tableName: 'playlists', id, data}, conn);
-  });
+  return db.update({tableName: 'playlists', id, data});
 });
 
 const dbPlaylistUpdate = (io) => dbChangeListener(io, 'playlists');

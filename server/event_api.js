@@ -23,12 +23,8 @@ const tableUpdateHandler = generateEventListener('data', (message, listener, tab
 });
 
 function dbChangeListener(listener, tableName) {
-  db.establishConnection()
-  .then((conn) => {
-    db.changes({tableName}, function(err, feed) {
-      if (err) conn.close();
-      tableUpdateHandler(feed, listener, tableName);
-    }, conn);
+  db.changes({tableName}, function(err, feed) {
+    tableUpdateHandler(feed, listener, tableName);
   });
 };
 
