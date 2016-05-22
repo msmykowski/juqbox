@@ -1,4 +1,3 @@
-// const r = require('rethinkdb');
 const r = require('rethinkdbdash')();
 
 module.exports = {
@@ -38,6 +37,13 @@ module.exports = {
 
   listDbs: async() => {
     return await r.dbList().run();
+  },
+
+  append: async({name, tableName, property, id, data}) => {
+    const dbName = name || process.env.NODE_ENV;
+    return await r.db(dbName).table(tableName).get(id).update({
+      [property]: r.row(property).append(data)
+    }).run();
   },
 
   drop: async(name) => {

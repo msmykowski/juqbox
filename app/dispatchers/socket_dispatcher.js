@@ -12,11 +12,11 @@ const SocketDispatcher = {
       });
     });
   },
-  playlistUpdate({data}) {
+  socketEmitPlaylistUpdate({data}) {
     socket.emit('playlistUpdate', data);
   },
-  entriesUpdate({data: {entries}}) {
-    this.$store.refine('entries').set(entries);
+  entriesUpdate({data}) {
+    this.$store.refine('playlist').set(data);
   }
 };
 

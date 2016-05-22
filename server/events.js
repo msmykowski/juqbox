@@ -9,8 +9,8 @@ const playlistIdEventListener = generateEventListener('playlistId', (id, listene
 });
 
 const playlistUpdateEventListener = generateEventListener('playlistUpdate', (data) => {
-  const {id} = data;
-  return db.update({tableName: 'playlists', id, data});
+  const {id, entry} = data;
+  return db.append({tableName: 'playlists', id, property: 'entries', data: entry});
 });
 
 const dbPlaylistUpdate = (io) => dbChangeListener(io, 'playlists');

@@ -68,7 +68,7 @@
     "pui-react-tools": "^1.2.0",
     "qs": "^5.2.0",
     "react": "^0.14.7",
-    "react-addons-test-utils": "^0.14.7",
+    "react-addons-test-utils": "^0.14.8",
     "react-dom": "^0.14.7",
     "recluster": "^0.4.5",
     "require-dir": "^0.3.0",

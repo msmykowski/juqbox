@@ -34,34 +34,32 @@ describe('SocketDispatcher', () => {
         expect(onSpy).toHaveBeenCalledWith('connect', jasmine.any(Function));
       });
     });
-  });
 
-  describe('entries', () => {
-    describe('update', () => {
-      beforeEach(() => {
-        subject.$store = new Cursor({entries: []}, cursorSpy);
-        subject.dispatch({type: 'entriesUpdate', data: {id: 1, entries: ['song1', 'song2']}});
-      });
-
-      it('updates the song entries', () => {
-        expect(cursorSpy).toHaveBeenCalledWith({
-          entries: ['song1', 'song2']
-        });
-      });
-    });
-  });
-
-  describe('playlist', () => {
-    describe('update', () => {
+    describe('emitPlaylistUpdate', () => {
       let playlist;
       beforeEach(() => {
-        playlist = {id: 1, entries: ['song1', 'song2', 'song3']};
+        playlist = {id: 1, entry: 'song1'};
         subject.dispatch({type: 'socketConnect', data: '1'});
-        subject.dispatch({type: 'playlistUpdate', data: playlist});
+        subject.dispatch({type: 'socketEmitPlaylistUpdate', data: playlist});
       });
 
       it('sends a playlistUpdate event to the server', () => {
         expect(emitSpy).toHaveBeenCalledWith('playlistUpdate', playlist);
+      });
+    });
+  });
+
+  describe('entries', () => {
+    describe('update', () => {
+      let playlist;
+      beforeEach(() => {
+        playlist = {id: 1, entries: ['song1', 'song2']};
+        subject.$store = new Cursor({playlist: {}}, cursorSpy);
+        subject.dispatch({type: 'entriesUpdate', data: playlist});
+      });
+
+      it('updates the playlist', () => {
+        expect(cursorSpy).toHaveBeenCalledWith({playlist});
       });
     });
   });

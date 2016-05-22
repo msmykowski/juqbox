@@ -5,6 +5,7 @@ describe('Router', () => {
     const Router = require('../../../app/components/router');
     const routerProps = {
       router: new MockRouter(),
+      playlist: {}
     };
 
     ReactDOM.render(<Router {...routerProps}/>, root);
