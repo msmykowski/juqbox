@@ -6,8 +6,6 @@ const {useWebpackDevMiddleware} = config;
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, '..', 'public')));
-
 if (useWebpackDevMiddleware) {
    const webpackHotMiddleware = require('pui-react-tools/middleware/webpack');
    app.use(...webpackHotMiddleware());
