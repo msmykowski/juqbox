@@ -15,7 +15,10 @@ class PlaylistPage extends React.Component {
   }
 
   render() {
-    const {playlist: {entries}} = this.props;
+    const {playlist} = this.props;
+    if (!playlist) return (<div className="playlist-does-not-exist">Playlist Does Not Exist</div>);
+
+    const {entries} = playlist;
     const entriesList = entries && entries.map((entry, i) => <div className="entry" key={i}>{entry}</div>);
     return (
       <div>
