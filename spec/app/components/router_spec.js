@@ -27,4 +27,17 @@ describe('Router', () => {
       expect(PlaylistPage.prototype.render).toHaveBeenCalled();
     });
   });
+
+  describe('root', () => {
+    let HomePage;
+    beforeEach(() => {
+      HomePage = require('../../../app/components/home_page');
+      spyOnRender(HomePage);
+      MockRouter.navigate('/');
+    });
+
+    it('renders the playlistPage', () => {
+      expect(HomePage.prototype.render).toHaveBeenCalled();
+    });
+  });
 });

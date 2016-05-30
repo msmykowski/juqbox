@@ -1,5 +1,6 @@
 const React = require('react');
 const {Actions} = require('p-flux');
+const HomePage = require('./home_page');
 const PlaylistPage = require('./playlist_page');
 
 const types = require('react').PropTypes;
@@ -21,6 +22,7 @@ function toFlattenedRoutes(routesHash) {
 }
 
 const routes = {
+  '/': 'root',
   '/playlist/:id': 'playlistPage',
 };
 
@@ -32,7 +34,7 @@ class Router extends React.Component {
   constructor(props, context) {
     super(props, context);
     const {state} = this;
-    this.state = {...state, Page: PlaylistPage };
+    this.state = {...state, Page: HomePage };
   }
 
   componentDidMount() {
@@ -41,6 +43,10 @@ class Router extends React.Component {
       router.get(path, this[callbackName]);
     });
   }
+
+  root = () => {
+    this.setState({Page: HomePage});
+  };
 
   playlistPage = ({params: {id}}) => {
     Actions.socketConnect(id);
