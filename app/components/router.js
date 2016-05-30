@@ -34,7 +34,7 @@ class Router extends React.Component {
   constructor(props, context) {
     super(props, context);
     const {state} = this;
-    this.state = {...state, Page: HomePage };
+    this.state = {...state, Page: null };
   }
 
   componentDidMount() {
@@ -55,6 +55,8 @@ class Router extends React.Component {
 
   render() {
     const {Page} = this.state;
+    if (!Page) return null;
+    
     return (
       <Page {...this.props}/>
     );
