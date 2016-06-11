@@ -1,12 +1,12 @@
 require('../spec_helper');
 
 describe('PlaylistPage', () => {
-  let playlist, entries;
+  let playlist, props, entries, PlaylistPage;
   beforeEach(() => {
     entries = ['song1', 'song2'];
     playlist = {id: 1, entries};
-    const props = {playlist};
-    const PlaylistPage = require('../../../app/components/playlist_page');
+    props = {playlist};
+    PlaylistPage = require('../../../app/components/playlist_page');
     ReactDOM.render(<PlaylistPage {...props}/>, root);
   });
 
@@ -26,6 +26,17 @@ describe('PlaylistPage', () => {
 
     it('dispatches a playlist update event', () => {
       expect(Dispatcher.dispatch).toHaveBeenCalledWith({type: 'socketEmitPlaylistUpdate', data: {id: 1, entry: newSong}});
+    });
+  });
+
+  describe('when the playlist does not exist', () => {
+    beforeEach(() => {
+      props = {...props, playlist: null};
+      ReactDOM.render(<PlaylistPage {...props}/>, root);
+    });
+
+    it('renders the playlist does not exist splash page', () => {
+      expect('.playlist-does-not-exist').toExist();
     });
   });
 });
