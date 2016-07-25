@@ -12,6 +12,7 @@
     "lodash.camelcase": "^4.1.0",
     "lodash.debounce": "^4.0.3",
     "recluster": "^0.4.5",
+    "spotify-web-api-node": "^2.3.5",
     "thenify": "^3.2.0",
     "url-join": "0.0.1",
     "warning": "^2.1.0"

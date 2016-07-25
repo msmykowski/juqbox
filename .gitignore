@@ -9,3 +9,4 @@
 .DS_Store
 npm-debug.log
 rethinkdb_data/
+server/secrets.json
