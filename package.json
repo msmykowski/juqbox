@@ -86,12 +86,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/msmykowski/enqueue"
+    "url": "https://github.com/msmykowski/juqbox"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/msmykowski/enqueue/issues"
+    "url": "https://github.com/msmykowski/juqbox/issues"
   },
-  "homepage": "https://github.com/msmykowski/enqueue"
+  "homepage": "https://github.com/msmykowski/juqbox"
 }
