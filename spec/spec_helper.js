@@ -1,12 +1,7 @@
-const React = require('react');
-const {Factory} = require('rosie');
-
 let globals;
 
 beforeAll(() => {
   globals = {
-    Factory,
-    React
   };
   Object.assign(global, globals);
 });
