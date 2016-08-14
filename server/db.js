@@ -1,6 +1,10 @@
-const r = require('rethinkdbdash')();
+let r;
 
 module.exports = {
+  connect: () => {
+    r = require('rethinkdbdash')();
+  },
+
   init: async({name, tables}) => {
     let db;
     const dbName = name || process.env.NODE_ENV;
